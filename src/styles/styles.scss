@@ -1,0 +1,6 @@
+@layer base, primeng;
+
+@layer base {
+  @import 'base/custom-normalize';
+  @import 'base/reset';
+}
