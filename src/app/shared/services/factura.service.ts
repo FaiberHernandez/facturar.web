@@ -4,6 +4,7 @@ import { Factura } from '../models/factura/factura.model';
 import { environment } from '../../../environments/environment.prod';
 import { DetalleFacturaFormValues } from '@models/factura/detalle-factura/detalle-factura-form-values.model';
 import { Observable } from 'rxjs';
+import { FacturaFormValues } from '@models/factura/factura-form-values.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class FacturaService {
 
   updateDetalleFactura(detalleFacturaId: number, detalleFactura: DetalleFacturaFormValues): Observable<null> {
     return this._http.put<null>(environment.facturapi+'DetalleFactura/'+detalleFacturaId, detalleFactura);
+  }
+
+  createFactura(factura: FacturaFormValues): Observable<number> {
+    return this._http.post<number>(environment.facturapi+'Factura', factura);
   }
 
 }
