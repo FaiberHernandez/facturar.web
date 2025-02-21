@@ -17,4 +17,9 @@ export class FacturaService {
   deleteFactura(facturaId: number) {
     return this._http.delete(environment.facturapi+'Factura/'+facturaId);
   }
+
+  deleteDetalleFactura(detalleFacturaId: number) {
+    return this._http.delete(environment.facturapi+'DetalleFactura/'+detalleFacturaId);
+  }
+
 }

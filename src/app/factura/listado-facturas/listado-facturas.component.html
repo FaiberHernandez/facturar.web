@@ -129,7 +129,7 @@
                   {{item.subtotal | currency}}
                 </td>
                 <td class="flex flex-wrap justify-content-end md:justify-content-center gap-1">
-                  <p-button icon="pi pi-trash" rounded="true" severity="danger" size="small" [disabled]="expandedFactura.detalles.length == 1"/>
+                  <p-button icon="pi pi-trash" rounded="true" severity="danger" size="small" [disabled]="expandedFactura.detalles.length == 1" (onClick)="deleteDetalleFacturaConfirmation(item)"/>
                   <p-button icon="pi pi-pencil" rounded="true" size="small"/>
                 </td>
               </tr>
