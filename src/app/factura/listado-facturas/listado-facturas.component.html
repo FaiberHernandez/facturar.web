@@ -1,1 +1,140 @@
-<p>listado-facturas works!</p>
+<section class="listado-facturas__header mb-3">
+  <h1 class="mb-2">Facturas generadas</h1>
+  <div class="listado-facturas__header__actions flex flex-wrap justify-content-between gap-2">
+    Aquí podrás encontrar las facturas registradas en el sistema e interactuar con ellas.
+    <p-button class="ml-auto" label="Crear factura" icon="pi pi-plus" />
+  </div>
+</section>
+<p-table #facturasTable [value]="facturas" dataKey="id" [rowsPerPageOptions]="[20, 50, 100]" 
+  [alwaysShowPaginator]="true" [globalFilterFields]="['cliente']" sortField="cliente" [sortOrder]="1" paginatorDropdownAppendTo="body" responsiveLayout="stack">
+  <ng-template pTemplate="caption">
+    <div class="flex flex-wrap justify-content-between gap-2">
+      <h3>Facturas encontradas: {{facturas.length}}</h3>
+      <span class="p-input-icon-left ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="facturasTable.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar"/>      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="cliente" pSortableColumn="cliente" class="w-5">
+        <div class="flex flex-row align-items-center">
+          Cliente <p-sortIcon field="cliente"></p-sortIcon>
+        </div>
+      </th>
+      <th scope="fecha" pSortableColumn="fecha" class="w-3">
+        <div class="flex flex-row align-items-center">
+          Fecha <p-sortIcon field="fecha"></p-sortIcon>
+        </div>
+      </th>
+      <th scope="total" pSortableColumn="total" class="w-3">
+        <div class="flex flex-row align-items-center">
+          Total <p-sortIcon field="total"></p-sortIcon>
+        </div>
+      </th>
+      <th scope="actions">
+        Acciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-factura let-expanded="expanded">
+    <tr [pRowToggler]="factura" class="cursor-pointer">
+      <td>              
+        <span class="p-column-title font-bold">Cliente</span>
+        {{factura.cliente}}
+      </td>
+      <td>
+        <span class="p-column-title font-bold">Fecha</span>
+        {{factura.fecha | date: 'dd/MM/yyyy HH:mm'}}
+      </td>
+      <td class="text-right">
+        <span class="p-column-title font-bold">Total</span>
+        {{factura.total | currency}}
+      </td>
+      <td class="text-center">
+        <span class="p-column-title font-bold">Acciones</span>
+        <span [ngClass]="['m-2 text-blue-500', expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right']"></span>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-expandedFactura>
+    <tr>
+      <td colspan="4" class="p-2 bg-blue-50">
+        <div class="w-full">
+          <div class="factura-actions flex flex-wrap gap-2 mb-2 justify-content-end">
+            <p-button icon="pi pi-trash" label="Eliminar factura" severity="danger" size="small"/>
+            <p-button icon="pi pi-pencil" label="Editar factura" size="small"/>
+          </div>
+          <h3 class="mb-2">Detalle de Factura:</h3>
+          <div class="summary flex flex-wrap justify-content-between gap-2 mb-4">
+            <div class="summary__item">
+              <span class="font-bold">Cantidad de detalles:</span> {{expandedFactura.detalles.length}}
+            </div>
+            <div class="summary__item">
+              <span class="font-bold">Total en items:</span> {{expandedFactura.total | currency}}
+            </div>
+          </div>
+          <p-table #itemsfacturaTable [value]="expandedFactura.detalles" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]" 
+            [alwaysShowPaginator]="true" paginatorDropdownAppendTo="body" responsiveLayout="stack" styleClass="p-datatable-sm p-datatable-striped">
+            <ng-template pTemplate="caption">
+              <div class="flex p-2">              
+                <p-button class="ml-auto" size="small" label="Crear detalle de factura" icon="pi pi-plus" />
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th scope="producto" pSortableColumn="producto" class="w-4">
+                  <div class="flex flex-row align-items-center">
+                    Producto <p-sortIcon field="producto"></p-sortIcon>
+                  </div>
+                </th>
+                <th scope="cantidad" pSortableColumn="cantidad" class="w-1">
+                  <div class="flex flex-row align-items-center">
+                    Cantidad <p-sortIcon field="cantidad"></p-sortIcon>
+                  </div>
+                </th>
+                <th scope="precioUnitario" pSortableColumn="precioUnitario" class="w-2">
+                  <div class="flex flex-row align-items-center">
+                    Precio Unitario <p-sortIcon field="precioUnitario"></p-sortIcon>
+                  </div>
+                </th>
+                <th scope="subtotal" pSortableColumn="subtotal" class="w-3">
+                  <div class="flex flex-row align-items-center">
+                    Subtotal <p-sortIcon field="subtotal"></p-sortIcon>
+                  </div>
+                </th>
+                <th scope="actions">
+                  Acciones
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>
+                  <span class="p-column-title font-bold">Producto</span>
+                  {{item.producto}}
+                </td>
+                <td class="text-right">
+                  <span class="p-column-title font-bold">Cantidad</span>
+                  {{item.cantidad}}
+                </td>
+                <td class="text-right">
+                  <span class="p-column-title font-bold">Precio Unitario</span>
+                  {{item.precioUnitario | currency}}
+                </td>
+                <td class="text-right">
+                  <span class="p-column-title font-bold">Subtotal</span>
+                  {{item.subtotal | currency}}
+                </td>
+                <td class="flex flex-wrap justify-content-end md:justify-content-center gap-1">
+                  <p-button icon="pi pi-trash" rounded="true" severity="danger" size="small" [disabled]="expandedFactura.detalles.length == 1"/>
+                  <p-button icon="pi pi-pencil" rounded="true" size="small"/>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
