@@ -1,0 +1,112 @@
+<form [formGroup]="form" class="mb-1">
+  <div class="formgrid grid">
+    <div class="field flex flex-column col-12">
+      <label for="cliente">Cliente</label>
+      <input type="text" pInputText formControlName="cliente" maxlength="100" styleClass="w-full"/>
+    </div>
+    <div class="field flex flex-column col-12 md:col-6">
+      <label for="fecha">Fecha</label>
+      <p-calendar inputId="fecha" formControlName="fecha" [showTime]="true" hourFormat="24" styleClass="w-full" />    
+    </div>
+    <div class="field flex flex-column col-12 md:col-6">
+      <label for="total">Total</label>
+      <span>{{totalFactura | currency}}</span>
+    </div>
+  </div>
+</form>
+<p-divider class="mb-2">
+  <strong>Items asociados a la factura:</strong>
+</p-divider>
+@if (!facturaToEdit) {
+  <form [formGroup]="detalleFacturaForm" (ngSubmit)="addDetalleFactura()" class="mb-2">
+    <div class="formgrid grid">
+      <div class="field flex flex-column col-12 md:col-6 lg:col-4">
+        <label for="producto">Producto</label>
+        <input type="text" pInputText formControlName="producto" maxlength="100" styleClass="w-full"/>
+      </div>
+      <div class="field flex flex-column col-12 md:col-6 lg:col-4">
+        <label for="cantidad">Cantidad</label>
+        <p-inputNumber inputId="cantidad" formControlName="cantidad" min="1" styleClass="w-full"/>
+      </div>
+      <div class="field flex flex-column col-12 md:col-6 lg:col-4">
+        <label for="precioUnitario">Precio unitario</label>
+        <p-inputNumber inputId="precioUnitario" formControlName="precioUnitario" min="0.01" styleClass="w-full" mode="currency" currency="COP" />
+      </div>
+      <div class="col-12">
+        <span class="font-bold">Subtotal:</span> {{(cantidad?.value * precioUnitario?.value) | currency}}
+      </div>
+      <div class="col-12 flex justify-content-end py-2">
+        <p-button type="submit" label="Añadir detalle" icon="pi pi-plus" [disabled]="!detalleFacturaForm.valid" size="small"/>
+      </div>
+    </div>
+  </form>
+}
+<p-table #itemsCreacionfacturaTable [value]="detallesFactura" dataKey="id" [rowsPerPageOptions]="[5, 10, 20]" 
+  [alwaysShowPaginator]="true" paginatorDropdownAppendTo="body" responsiveLayout="stack" styleClass="p-datatable-sm p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="producto" class="w-4">
+        <div class="flex flex-row align-items-center">
+          Producto
+        </div>
+      </th>
+      <th scope="cantidad" class="w-2">
+        <div class="flex flex-row align-items-center">
+          Cantidad 
+        </div>
+      </th>
+      <th scope="precioUnitario" class="w-3">
+        <div class="flex flex-row align-items-center">
+          Precio Unitario 
+        </div>
+      </th>
+      <th scope="subtotal" class="w-3">
+        <div class="flex flex-row align-items-center">
+          Subtotal
+        </div>
+      </th>
+      @if (!facturaToEdit) {      
+        <th scope="actions">
+        </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-index="rowIndex">
+    <tr>
+      <td>
+        <span class="p-column-title font-bold">Producto</span>
+        {{item.producto}}
+      </td>
+      <td class="text-right">
+        <span class="p-column-title font-bold">Cantidad</span>
+        {{item.cantidad}}
+      </td>
+      <td class="text-right">
+        <span class="p-column-title font-bold">Precio Unitario</span>
+        {{item.precioUnitario | currency}}
+      </td>
+      <td class="text-right">
+        <span class="p-column-title font-bold">Subtotal</span>
+        {{(item.precioUnitario * item.cantidad) | currency}}
+      </td>
+      @if (!facturaToEdit) {
+        <td class="flex flex-wrap justify-content-end md:justify-content-center gap-1">
+          <p-button icon="pi pi-trash" rounded="true" severity="danger" size="small" (onClick)="removeDetalleFactura(index)"/>
+        </td>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5">
+        <span class="flex justify-content-center text-orange-500 text-sm font-bold flex">
+          No hay detalles asociados a la factura, debe asociar por lo menos uno.
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<section class="flex flex-wrap justify-content-center gap-2 my-4">
+  <p-button label="Guardar" icon="pi pi-save" [disabled]="!form.valid || detallesFactura.length == 0" (onClick)="saveFactura()"/>
+  <p-button type="submit" label="Guardar y volver" [disabled]="!form.valid || detallesFactura.length == 0" (onClick)="saveFactura(true)"/>
+</section>

@@ -11,7 +11,7 @@
     </div>
     <div class="field flex flex-column col-12 md:col-6">
       <label for="precioUnitario">Precio unitario</label>
-      <p-inputNumber inputId="precioUnitario" formControlName="precioUnitario" min="0.01" styleClass="w-full"/>
+      <p-inputNumber inputId="precioUnitario" formControlName="precioUnitario" min="0.01" styleClass="w-full" mode="currency" currency="COP"/>
     </div>
     <div class="w-full">
       <span class="font-bold">Subtotal:</span> {{(cantidad?.value * precioUnitario?.value) | currency}}

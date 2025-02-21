@@ -4,10 +4,10 @@
   <h1 class="mb-2">Facturas generadas</h1>
   <div class="listado-facturas__header__actions flex flex-wrap justify-content-between gap-2">
     Aquí podrás encontrar las facturas registradas en el sistema e interactuar con ellas.
-    <p-button class="ml-auto" label="Crear factura" icon="pi pi-plus" />
+    <p-button class="ml-auto" label="Crear factura" icon="pi pi-plus" [routerLink]="['/administrar-facturas/crear-factura']" />
   </div>
 </section>
-<p-table #facturasTable [value]="facturas" dataKey="id" [rowsPerPageOptions]="[20, 50, 100]" 
+<p-table #facturasTable [value]="facturas" dataKey="id" [rowsPerPageOptions]="[20, 50, 100]" rowExpandMode="single"
   [alwaysShowPaginator]="true" [globalFilterFields]="['cliente']" sortField="cliente" [sortOrder]="1" paginatorDropdownAppendTo="body" responsiveLayout="stack">
   <ng-template pTemplate="caption">
     <div class="flex flex-wrap justify-content-between gap-2">
@@ -65,7 +65,7 @@
         <div class="w-full">
           <div class="factura-actions flex flex-wrap gap-2 mb-2 justify-content-end">
             <p-button icon="pi pi-trash" label="Eliminar factura" severity="danger" size="small" (onClick)="deleteFacturaConfirmation(expandedFactura.id)"/>
-            <p-button icon="pi pi-pencil" label="Editar factura" size="small"/>
+            <p-button icon="pi pi-pencil" label="Editar factura" size="small" [routerLink]="['/administrar-facturas/editar-factura/'+expandedFactura.id]"/>
           </div>
           <h3 class="mb-2">Detalle de Factura:</h3>
           <div class="summary flex flex-wrap justify-content-between gap-2 mb-4">
@@ -143,5 +143,5 @@
     <tr>
       <td colspan="4">No se encontraron facturas</td>
     </tr>
-</ng-template>
+  </ng-template>
 </p-table>

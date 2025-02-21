@@ -13,11 +13,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DetalleFactura } from '@models/factura/detalle-factura/detalle-factura.model';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DetalleFacturaFormComponent } from '../detalle-factura-form/detalle-factura-form.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-listado-facturas',
   standalone: true,
-  imports: [ButtonModule, CommonModule, TableModule, FormsModule, InputTextModule, ConfirmDialogModule, ToastModule],
+  imports: [ButtonModule, CommonModule, TableModule, FormsModule, InputTextModule, ConfirmDialogModule, ToastModule, RouterModule],
   templateUrl: './listado-facturas.component.html',
   styleUrl: './listado-facturas.component.scss',
   providers: [ConfirmationService, MessageService, DialogService]

@@ -12,6 +12,10 @@ export const routes: Routes = [
       {
         path: 'crear-factura',
         loadComponent: () => import('./crear-factura/crear-factura.component').then(m => m.CrearFacturaComponent)
+      },
+      {
+        path: 'editar-factura/:id',
+        loadComponent: () => import('./editar-factura/editar-factura.component').then(m => m.EditarFacturaComponent)
       }
     ]
   }
