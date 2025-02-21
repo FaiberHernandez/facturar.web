@@ -1,3 +1,5 @@
+<p-toast />
+<p-confirmDialog />
 <section class="listado-facturas__header mb-3">
   <h1 class="mb-2">Facturas generadas</h1>
   <div class="listado-facturas__header__actions flex flex-wrap justify-content-between gap-2">
@@ -62,7 +64,7 @@
       <td colspan="4" class="p-2 bg-blue-50">
         <div class="w-full">
           <div class="factura-actions flex flex-wrap gap-2 mb-2 justify-content-end">
-            <p-button icon="pi pi-trash" label="Eliminar factura" severity="danger" size="small"/>
+            <p-button icon="pi pi-trash" label="Eliminar factura" severity="danger" size="small" (onClick)="deleteFacturaConfirmation(expandedFactura.id)"/>
             <p-button icon="pi pi-pencil" label="Editar factura" size="small"/>
           </div>
           <h3 class="mb-2">Detalle de Factura:</h3>
@@ -137,4 +139,9 @@
       </td>
     </tr>
   </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="4">No se encontraron facturas</td>
+    </tr>
+</ng-template>
 </p-table>

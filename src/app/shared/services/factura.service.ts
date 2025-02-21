@@ -13,4 +13,8 @@ export class FacturaService {
   getFacturas() {
     return this._http.get<Factura[]>(environment.facturapi+'Factura');
   }
+
+  deleteFactura(facturaId: number) {
+    return this._http.delete(environment.facturapi+'Factura/'+facturaId);
+  }
 }
