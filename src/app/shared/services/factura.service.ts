@@ -20,6 +20,10 @@ export class FacturaService {
     return this._http.delete<null>(environment.facturapi+'Factura/'+facturaId);
   }
 
+  deleteDetalleFactura(detalleFacturaId: number) {
+    return this._http.delete(environment.facturapi+'DetalleFactura/'+detalleFacturaId);
+  }
+
   createDetalleFactura(facturaId: number, detalleFactura: DetalleFacturaFormValues): Observable<number> {
     return this._http.post<number>(environment.facturapi+'Factura/'+facturaId+'/detalle', detalleFactura);
   }
