@@ -1,5 +1,5 @@
-<p-toast />
-<p-confirmDialog />
+<p-toast key="listado-facturas-toast" />
+<p-confirmDialog key="listado-facturas" />
 <section class="listado-facturas__header mb-3">
   <h1 class="mb-2">Facturas generadas</h1>
   <div class="listado-facturas__header__actions flex flex-wrap justify-content-between gap-2">
@@ -80,7 +80,7 @@
             [alwaysShowPaginator]="true" paginatorDropdownAppendTo="body" responsiveLayout="stack" styleClass="p-datatable-sm p-datatable-striped">
             <ng-template pTemplate="caption">
               <div class="flex p-2">              
-                <p-button class="ml-auto" size="small" label="Crear detalle de factura" icon="pi pi-plus" />
+                <p-button class="ml-auto" size="small" label="Crear detalle de factura" icon="pi pi-plus" (onClick)="createDetalleFactura(expandedFactura.id)" />
               </div>
             </ng-template>
             <ng-template pTemplate="header">
@@ -130,7 +130,7 @@
                 </td>
                 <td class="flex flex-wrap justify-content-end md:justify-content-center gap-1">
                   <p-button icon="pi pi-trash" rounded="true" severity="danger" size="small" [disabled]="expandedFactura.detalles.length == 1" (onClick)="deleteDetalleFacturaConfirmation(item)"/>
-                  <p-button icon="pi pi-pencil" rounded="true" size="small"/>
+                  <p-button icon="pi pi-pencil" rounded="true" size="small" (onClick)="editDetalleFactura(expandedFactura.id, item)"/>
                 </td>
               </tr>
             </ng-template>

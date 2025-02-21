@@ -1,0 +1,23 @@
+<p-toast key="detalle-factura-form" />
+<form [formGroup]="form" (ngSubmit)="saveDetalleFactura()" >
+  <div class="formgrid grid">
+    <div class="field flex flex-column col-12">
+      <label for="producto">Producto</label>
+      <input type="text" pInputText formControlName="producto" maxlength="100" styleClass="w-full"/>
+    </div>
+    <div class="field flex flex-column col-12 md:col-6">
+      <label for="cantidad">Cantidad</label>
+      <p-inputNumber inputId="cantidad" formControlName="cantidad" min="1" styleClass="w-full"/>
+    </div>
+    <div class="field flex flex-column col-12 md:col-6">
+      <label for="precioUnitario">Precio unitario</label>
+      <p-inputNumber inputId="precioUnitario" formControlName="precioUnitario" min="0.01" styleClass="w-full"/>
+    </div>
+    <div class="w-full">
+      <span class="font-bold">Subtotal:</span> {{(cantidad?.value * precioUnitario?.value) | currency}}
+    </div>
+    <div class="w-full text-center p-2">
+      <p-button type="submit" label="Guardar" icon="pi pi-save" [disabled]="!form.valid"/>
+    </div>
+  </div>
+</form>
