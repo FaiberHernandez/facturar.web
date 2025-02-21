@@ -60,6 +60,7 @@ export class ListadoFacturasComponent implements OnInit, OnDestroy {
       rejectLabel:"No",
       rejectIcon:"none",
       rejectButtonStyleClass:"p-button-text",
+      key: 'listado-facturas',
       accept: () => {
         this.deleteFactura(facturaId);
       }
