@@ -1,0 +1,16 @@
+<p-toast />
+<section class="w-full mb-1 text-right">
+  <a [routerLink]="['/administrar-facturas/listado-facturas']" class="text-blue-500 no-underline cursor-pointer">
+    <span class="pi pi-arrow-left"></span>  Volver a listado de facturas
+  </a>
+</section>
+<h1>Editar factura</h1>
+<section>
+  @defer (when facturaToEdit) {
+    <app-factura-form [facturaToEdit]="facturaToEdit" (saveFacturaChange)="saveFactura($event)"/>
+  }@loading {
+    <div class="w-full flex justify-content-center my-4">
+      <p-progressSpinner ariaLabel="loading" />
+    </div>
+  }
+</section>

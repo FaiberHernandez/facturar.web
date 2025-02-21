@@ -38,6 +38,9 @@ export class FacturaFormComponent implements OnInit {
   ngOnInit(): void {
     if(this.facturaToEdit) {
       this.form.patchValue(this.facturaToEdit);
+      this.fecha?.setValue(new Date(this.facturaToEdit.fecha));
+      this.detallesFactura = this.facturaToEdit.detalles;
+      this.totalFactura = this.getTotalFactura();
     }
   }
 
@@ -80,7 +83,7 @@ export class FacturaFormComponent implements OnInit {
 
     this.saveFacturaChange.emit(facturaFormValues);
 
-    if(!redirectToFacturas) {
+    if(!redirectToFacturas && !this.facturaToEdit) {
       this.form.reset();
       this.detalleFacturaForm.reset();
       this.detallesFactura = [];

@@ -37,4 +37,12 @@ export class FacturaService {
     return this._http.post<number>(environment.facturapi+'Factura', factura);
   }
 
+  getFacturaById(facturaId: number): Observable<Factura> {
+    return this._http.get<Factura>(environment.facturapi+'Factura/'+facturaId);
+  }
+
+  editFactura(facturaId: number, factura: FacturaFormValues): Observable<null> {
+    return this._http.put<null>(environment.facturapi+'Factura/'+facturaId, factura);
+  }
+
 }

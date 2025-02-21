@@ -65,7 +65,7 @@
         <div class="w-full">
           <div class="factura-actions flex flex-wrap gap-2 mb-2 justify-content-end">
             <p-button icon="pi pi-trash" label="Eliminar factura" severity="danger" size="small" (onClick)="deleteFacturaConfirmation(expandedFactura.id)"/>
-            <p-button icon="pi pi-pencil" label="Editar factura" size="small"/>
+            <p-button icon="pi pi-pencil" label="Editar factura" size="small" [routerLink]="['/administrar-facturas/editar-factura/'+expandedFactura.id]"/>
           </div>
           <h3 class="mb-2">Detalle de Factura:</h3>
           <div class="summary flex flex-wrap justify-content-between gap-2 mb-4">
